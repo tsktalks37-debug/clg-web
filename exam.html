@@ -1,43 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exam - Graphic Era Hill University</title>
-<link rel="stylesheet" href="style_home.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEHU Student Portal - Exam</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Header Bar */
+        .top-navbar {
+            background-color: #208cc7;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #ffffff;
+            padding: 0 15px;
+            flex-shrink: 0;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .menu-toggle {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+        }
+
+        .icon-btn {
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .btn-orange { background-color: #f39c12; }
+        .btn-teal { background-color: #00a65a; }
+        .btn-home { background-color: #dd4b39; }
+
+        .user-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #fff;
+        }
+
+        /* Main Container Layout */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left Navigation Sidebar */
+        .sidebar-nav {
+            width: 220px;
+            background-color: #0b1a78;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-box {
+            background-color: #ffffff;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid #0b1a78;
+        }
+
+        .logo-box img {
+            max-width: 100%;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            padding: 10px 12px;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: background 0.2s;
+            text-transform: uppercase;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: #051052;
+        }
+
+        /* Main Content Area */
+        .content-area {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .placeholder-message {
+            color: #337ab7;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* Exam Summary Panel */
+        .card-panel {
+            background: #ffffff;
+            border: 1px solid #d2d6de;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            color: #337ab7;
+            padding: 10px 15px;
+            font-size: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #f4f4f4;
+        }
+
+        .card-body {
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .results-table th, .results-table td {
+            border: 1px solid #e0e0e0;
+            padding: 8px;
+        }
+
+        .results-table th {
+            background-color: #f7f9fa;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .results-table tr.alt-row {
+            background-color: #ffffcc;
+        }
+
+        .table-link {
+            color: #337ab7;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .table-link:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="topbar">
-        <div class="topbar-left">
-            <i class="fa-solid fa-bars menu-icon"></i>
-            <div class="logo-box">
-                <img src="logo.png" alt="Graphic Era Hill University">
+    <!-- Top Navigation Header -->
+    <header class="top-navbar">
+        <div class="navbar-left">
+            <i class="fa-solid fa-bars menu-toggle"></i>
+            <span id="page-title">Exam</span>
+        </div>
+        <div class="navbar-right">
+            <div class="icon-btn btn-orange" title="Back"><i class="fa-solid fa-arrow-left"></i></div>
+            <div class="icon-btn btn-teal" title="Dashboard"><i class="fa-solid fa-chart-column"></i></div>
+            <div class="icon-btn btn-home" title="Home"><i class="fa-solid fa-house"></i></div>
+            <div class="user-profile-header">
+                <span>TANISHKA BHIST</span>
+                <img src="avatar.jpeg" alt="User" class="user-avatar-small" onerror="this.src='https://via.placeholder.com/28'">
+                <i class="fa-solid fa-caret-down"></i>
             </div>
         </div>
-        <div class="topbar-right">
-            <a href="home.html" class="icon-circle orange" title="Back"><i class="fa-solid fa-arrow-rotate-left"></i></a>
-            <a href="home.html" class="icon-square dark" title="Dashboard"><i class="fa-solid fa-chart-simple"></i></a>
-            <a href="home.html" class="icon-circle orange" title="Home"><i class="fa-solid fa-house"></i></a>
-            <div class="user-info">
-                <span class="user-name">TANESH SINGH</span>
-                <img src="avatar.jpg" alt="Profile" class="user-avatar">
-                <i class="fa-solid fa-chevron-down caret"></i>
-            </div>
-        </div>
-    </div>
+    </header>
 
-    <div class="dashboard-layout">
-        <div class="main-content" style="width:100%;">
-            <div class="panel" style="margin-top:0;">
-                <div class="panel-header"><i class="fa-solid fa-circle-info"></i> Exam</div>
-                <div class="panel-body" style="justify-content:center; align-items:center; min-height:300px; color:#8a97a3; font-size:14px;">
-                    Exam page content goes here.
+    <!-- Body Layout -->
+    <div class="main-wrapper">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar-nav">
+            <div class="logo-box">
+                <img src="gehu-logo.png" alt="Graphic Era Hill University Logo" onerror="this.alt='Graphic Era Hill University'">
+            </div>
+            <ul class="nav-list">
+                <li class="nav-item" onclick="showSection('statement', 'Exam')">Sessional / Mid / External Marks Statement</li>
+                <li class="nav-item active" onclick="showSection('result', 'Exam | Result')">Result</li>
+                <li class="nav-item" onclick="showSection('backpapers', 'Exam | Back Papers')">Back Papers</li>
+                <li class="nav-item" onclick="showSection('admitcard', 'Exam | Admit Card')">Admit Card</li>
+                <li class="nav-item" onclick="showSection('academic', 'Exam | Academic Change/Apply')">Academic Change/Apply</li>
+                <li class="nav-item" onclick="showSection('seating', 'Exam | Seating Arrangement')">Seating Arrangement</li>
+                <li class="nav-item" onclick="showSection('markshistory', 'Exam | Marks History')">Marks History</li>
+                <li class="nav-item" onclick="showSection('download', 'Exam | Student Document Download')">Student Document Download</li>
+                <li class="nav-item" onclick="showSection('issued', 'Exam | Issued Marksheet')">Issued Marksheet</li>
+            </ul>
+        </nav>
+
+        <!-- Dynamic Content Area -->
+        <main class="content-area">
+            
+            <!-- Default Welcome Screen -->
+            <div id="default-view" class="placeholder-message hidden">
+                Please Select Menu From Menu Bar.
+            </div>
+
+            <!-- Result Panel -->
+            <div id="result-view" class="card-panel">
+                <div class="card-header">
+                    Exam Summary
+                </div>
+                <div class="card-body">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Year/Sem</th>
+                                <th>SGPA</th>
+                                <th>Back Paper(s)</th>
+                                <th>Result Status</th>
+                                <th>Grade View</th>
+                                <th>Marksheet View</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>7.95</td>
+                                <td>0</td>
+                                <td>Pass With First Attempt</td>
+                                <td><a href="RptStuMarksheetGEUNew .pdf" target="_blank" class="table-link">View</a></td>
+                                <td><a href="RptStuMarksheetGEUNew (1).pdf" target="_blank" class="table-link">View Detail</a></td>
+                                <td><a href="#" class="table-link">Back Applied</a></td>
+                            </tr>
+                            <tr class="alt-row">
+                                <td>2</td>
+                                <td>2</td>
+                                <td>8.30</td>
+                                <td>0</td>
+                                <td>Pass With First Attempt</td>
+                                <td><a href="RptStuMarksheetGEUNew .pdf" target="_blank" class="table-link">View</a></td>
+                                <td><a href="RptStuMarksheetGEUNew (1).pdf" target="_blank" class="table-link">View Detail</a></td>
+                                <td><a href="#" class="table-link">Back Applied</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
+
+        </main>
     </div>
 
+    <!-- Navigation Toggle Script -->
+    <script>
+        function showSection(sectionId, headerTitle) {
+            // Update Title
+            document.getElementById('page-title').innerText = headerTitle;
+
+            // Update Active Menu Class
+            const items = document.querySelectorAll('.nav-item');
+            items.forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Hide all sections
+            document.getElementById('default-view').classList.add('hidden');
+            document.getElementById('result-view').classList.add('hidden');
+
+            // Show selected section
+            if (sectionId === 'result') {
+                document.getElementById('result-view').classList.remove('hidden');
+            } else {
+                document.getElementById('default-view').classList.remove('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
